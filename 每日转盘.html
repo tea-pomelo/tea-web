@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="pic-list">
+        <div class="pic-block">
+            <img id="picture1" onclick="checkPicture(this.id)" class="pic-block-img" src="图标库\播放.png"/>
+            <img id="picture1-checked" class="hidden" src="图标库\暂停.png"/>
+        </div>
+        <div class="pic-block">
+            <img id="picture2" onclick="checkPicture(this.id)" class="pic-block-img" src="图标库\播放.png"/>
+            <img id="picture2-checked" class="hidden" src="图标库\暂停.png"/>
+        </div>
+        <div class="pic-block">
+            <img id="picture3" onclick="checkPicture(this.id)" class="pic-block-img" src="图标库\播放.png"/>
+            <img id="picture3-checked" class="hidden" src="图标库\暂停.png"/>
+        </div>
+    </div>
+</body>
+</html>
+
+<style>
+.pic-list {
+  display: flex;
+  height: 15.3vh;
+  margin-bottom: 1.7vh;
+  align-items: center;
+  justify-content: space-around;
+}
+.pic-list .pic-block-img {
+  height: 100%;
+}
+.pic-list .checked-small {
+  height: 30%;
+  position: absolute;
+  bottom: 10%;
+  right: 30%;
+}
+.pic-block {
+  position: relative;
+  height: 100%;
+  margin: 0 auto;
+}
+.hidden {
+  display: none;
+}
+</style>
+
+<script>
+let checkedPictures = new Set();
+function checkPicture(id) {
+    if(checkedPictures.has(id)) {
+        checkedPictures.delete(id);
+        document.getElementById(id+'-checked').setAttribute("class", "hidden");
+        document.getElementById(id+'-checked').setAttribute("class", "hidden");
+    }
+    else {
+        checkedPictures.add(id);
+        document.getElementById(id+'-checked').setAttribute("class", "checked-small");
+    }
+}
+</script>

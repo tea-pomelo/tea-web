@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="照片\bitbug_favicon.ico" />
+    <title>TE</title>
+    <link rel="stylesheet" href="1.css">
+
+</head>
+<script src="https://kit.fontawesome.com/b51b1b253a.js" crossorigin="anonymous"></script>
+<style>
+    .play-warp {
+        position: absolute;
+        bottom: 0px;
+    }
+
+    .big2 {
+        position: absolute;
+        bottom: 0px;
+        background-color: #c2c2c250;
+        width: 100%;
+        height: 80px;
+    }
+
+    .play-warp .play-control {
+        background-color: #6dfcfcac;
+        border-radius: 15px;
+        width: 360px;
+        height: 80px;
+        padding: 20px 30px;
+        display: flex;
+        justify-content: space-between;
+        z-index: 10;
+
+    }
+
+    .play-control .cover {
+        height: 100px;
+        width: 100px;
+        border-radius: 50%;
+        background-color: #6dfcfcac;
+        ;
+        margin-top: -60px;
+        padding: 6px;
+        position: relative;
+        animation: zhuan 5s infinite linear;
+        animation-play-state: paused;
+    }
+
+    .cover img {
+        width: 100%;
+        border-radius: 50%;
+
+    }
+
+    .play-control .cover::before {
+        content: "";
+        display: inline-block;
+        width: 15px;
+        height: 15px;
+        border-radius: 50%;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color:#6dfcfcac;
+    }
+
+    @keyframes zhuan {
+        0% {
+            transform: rotate(0deg);
+        }
+
+        100% {
+            transform: rotate(360deg);
+        }
+    }
+
+    .play-control .control {
+        width: 60%;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .control i {
+        width: 40px;
+        height: 40px;
+        text-align: center;
+        line-height: 40px;
+        font-size: 26px;
+        color: rgba(255, 255, 255, 0.841);
+        cursor: pointer;
+        transition: all 0.4s;
+    }
+
+    .control i:hover {
+        border-radius: 6px;
+        background-color: rgba(255, 255, 255, 0.815);
+        color: #00ffffa8;
+    }
+
+    .play-warp .play-info {
+        width: 90%;
+        position: absolute;
+        top: -80%;
+        left: 50%;
+        padding: 10px;
+        transform: translateX(-50%);
+        z-index: -1;
+        background: rgba(94, 231, 231, 0.693);
+        box-shadow: 0 8xp 32 xp rgb(133, 133, 133);
+        backdrop-filter: blur(3.5px);
+        -webkit-backdrop-filter: blur(3.5px);
+        border-radius: 10px;
+        border: 1px solid rgba(253, 253, 253, 0.418);
+        display: flex;
+        justify-content: flex-end;
+        opacity: 0;
+    }
+
+    .play-info .info {
+        width: 60%;
+        font-size: 10px;
+    }
+
+    .info .name {
+        font-size: 14px;
+        font-weight: bold;
+    }
+
+    .info .singer-album {
+        color: rgba(98, 98, 98, 0.736);
+        line-height: 20px;
+    }
+
+    .info .music_progress {
+        width: 100%;
+    }
+
+    .music_progress .music_progress_top {
+        display: flex;
+        justify-content: space-between;
+        color: rgb(255, 0, 0);
+        line-height: 20px;
+    }
+
+    .music_progress .music_progress_bar {
+        width: 100%;
+        height: 3px;
+        background-color: #4e4e4e;
+        border-radius: 10px;
+        margin-top: 3px;
+    }
+
+    .music_progress_bar .music_progress_line {
+        width: 0%;
+        height: 100%;
+        background-color: red;
+    }
+
+
+    .modal {
+        width: 100%;
+        height: 100%;
+        background-color: #6e8ebc75;
+        position: fixed;
+        top: 0;
+        left: 0;
+        display: none;
+    }
+
+    .modal .modal-box {
+        width: 45%;
+        height: 100%;
+        padding: 20px;
+        background-color: #fff;
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    .modal-box .modal-box-top {
+        width: 100%;
+        height: 40px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+    }
+
+    .modal-box-top .modal-close {
+
+        font-size: 20px;
+        cursor: pointer;
+        transition: transform 0.4s;
+
+    }
+
+    .modal-box-top .modal-close:hover {
+        transform: rotate(180deg);
+    }
+
+    .modal-box .modal-wrapper {
+        width: 100%;
+        height: calc(100% - 40px);
+        overflow-y: auto;
+    }
+
+    .modal-wrapper .music-list {
+        list-style: none;
+    }
+
+    .music-list li {
+        padding: 10px 10px;
+        border-bottom: 1px solid rgb(52, 255, 1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+
+    }
+
+    .play-circle {
+        display: flex;
+    }
+
+    .play-circle:hover {
+        transform: scale(1.2);
+    }
+
+    .playing {
+        color: aquamarine;
+    }
+</style>
+<div class="big1">
+
+    <body background="照片\mg.png" style="background-size:cover;
+    background-attachment: fixed;
+    background-position: center;">
+        <div class="big">
+            <div><img src="照片/透明图标.png" width="130" height="50"></div>
+            <ul>
+
+                <div class="small1">
+
+                    <li class="front-page"><a href="茶柚.html">首页</a></li>
+                    <li class="blog"><a href="#">游戏</a>
+                        <ul class="blog-subfunction">
+                            <li><a href="#">游戏1</a></li>
+                            <li><a href="#">游戏2</a></li>
+                            <li><a href="#">游戏3</a></li>
+                        </ul>
+                    </li>
+                    <li class="course"><a href="播放器\bfq.html">音乐</a></li>
+                    <li class="developer"><a href="工具.html">工具</a></li>
+                    <li class="answer-request"><a href="每日转盘.html">每日名句</a></li>
+                    <li class="community"><a href="#">社区</a></li>
+                </div>
+            </ul>
+        </div>
+
+
+    </body>
+    <div class="big2">
+        <div class="play-warp1">
+            <div class="play-warp">
+                <div class="play-info">
+                    <div class="info">
+                        <div class="name">伪善者</div>
+                        <div class="singer-album">金渔 - 伪善者</div>
+                        <div class="music_progress">
+                            <div class="music_progress_top">
+                                <span class="current-time">00:00</span>
+                                <span class="time">03:41</span>
+                            </div>
+                            <div class="music_progress_bar">
+                                <div class="music_progress_line"></div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                </div>
+                <div class="play-control">
+                    <div class="cover">
+                        <img src="http://p1.music.126.net/1EuxT2a9-EaIyHBPLF7xbQ==/109951167029743508.jpg" alt="封面" />
+                    </div>
+                    <div class="control">
+                        <i id="prevBtn"class="fa fa-step-backward"></i>
+                        <i id="playBtn" class="fa fa-play"></i>
+                        <i id="nextBtn"class="fa fa-step-forward"></i>
+                        <i id="openModal"class="fa fa-reorder"></i>
+                    </div>
+
+                </div>
+            </div>
+            <div class="modal">
+                <div class="modal-box">
+                    <div class="modal-box-top">
+                        <div class="modal-title">音乐列表</div>
+                        <div class="modal-close">
+                            <i class="fa-solid fa-xmark"></i>
+                        </div>
+                    </div>
+                    <div class="modal-wrapper">
+                        <ul class="music-list">
+                            <li>
+                                <span>0.1 伪善者 - 金渔 </span>
+                                <span class="play-circle"><i class="fa fa-play"></i></span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <audio src=""></audio>
+
+    <script src="./js/jquery.js"></script>
+    <script>
+        var musicList = [];
+        var currentIndex = 0;
+        $.ajax({
+            type: "GET",
+            url: "./music.json",
+            dataType: "json",
+            success: function (data) {
+                musicList = data;
+
+                render(musicList[currentIndex]);
+            }
+        })
+
+        $("#playBtn").on('click', function () {
+            if ($("audio").get(0).paused) {
+                $(this).removeClass('fa fa-play').addClass("fa fa-pause");
+
+                $(".play-info").animate(
+                    {
+                        top: "-100%",
+                        opacity: 1,
+                    },
+                    "slow"
+                );
+
+                $(".cover").css({
+                    "animation-play-state":"running",
+                })
+
+                $("audio").get(0).play();
+            } else {
+                $(this).removeClass('fa fa-pause').addClass("fa fa-play");
+
+                $(".play-info").animate(
+                    {
+                        top: "-80%",
+                        opacity: 0,
+                    },
+                    "slow"
+                );
+
+                $(".cover").css({
+                    "animation-play-state":"paused",
+                })
+
+                $("audio").get(0).pause();
+            }
+        });
+
+        $("#prevBtn").on("click",function(){
+            if (currentIndex >0){
+                currentIndex--;
+            }else{
+                currentIndex = musicList.length - 1;
+            }
+        
+            render(musicList[currentIndex]);
+
+            $("#playBtn").trigger("click");
+        });
+
+        $("#nextBtn").on("click",function(){
+            if (currentIndex < musicList.length-1){
+                currentIndex++;
+            }else{
+                currentIndex = 0;
+            }
+        
+            render(musicList[currentIndex]);
+
+            $("#playBtn").trigger("click");
+        });
+
+        $("#openModal").on("click",function(){
+            $(".modal").css({
+                display:"block",
+            })
+        });
+
+        $(".modal-close").on("click",function(){
+            $(".modal").css({
+                display:"none",
+            })
+        })
+
+        $("audio").on("timeupdate",function(){
+            var currentTime = $("audio").get(0).currentTime;
+            var duration = $("audio").get(0).duration;
+            console.log(formatTime(currentTime), formatTime(duration));
+            $(".current-time").text(formatTime(currentTime));
+            var value = (currentTime / duration) * 100;
+            $(".music_progress_line").css({
+                width: value + "%",
+            });
+        });
+        
+        function formatTime(time){
+            var min = parseInt (time / 60);
+            var sec = parseInt (time % 60);
+            min = min <10? "0" + min : min;
+            sec = sec <10? "0" + sec : sec;
+
+            return `${min}:${sec}`;
+        }
+
+
+        function render(data) {
+            $(".name").text(data.name);
+            $(".singer-album").text(`${data.singer} - ${data.album}`);
+            $(".time").text(data.time);
+            $(".cover img").attr("src", data.cover);
+            $("audio").attr("src",data.audio_url);
+        }
+    </script>
+
+</html>
